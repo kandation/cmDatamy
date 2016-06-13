@@ -1,14 +1,10 @@
-import requests
 from bs4 import BeautifulSoup
-import urllib
+from datetime import datetime
 from time import sleep
 import time
+import requests
 import json
-from datetime import datetime
-
 import codecs
-
-import unicodedata
 
 def scanData(start, stop):
     finalData = {}
@@ -46,8 +42,6 @@ def scanData(start, stop):
 
                     stdList.append(list2)
                     listData = []
-
-
 
         else:
             print("Now Scan " + str(sid) + " not regist!")
