@@ -42,10 +42,11 @@ def countData(obj,start, stop):
                     subclass[str(obj[str(sid)][cs][0])]["sec"][str(obj[str(sid)][cs][2])].append(str(sid))
                 except Exception:
                     subclass[str(obj[str(sid)][cs][0])]["sec"][str(obj[str(sid)][cs][2])] = [str(sid)]
-    print(subclass)
+    #print(subclass)
+    return subclass
 
 
 def getData(fileID):
     r = readFile(fileID)
     g = getminmax_key(r)
-    countData(r,int(g['min']), int(g['max']))
+    return countData(r,int(g['min']), int(g['max']))
