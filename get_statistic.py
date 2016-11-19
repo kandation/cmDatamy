@@ -13,8 +13,6 @@ def countData(obj,start, stop):
     subclass = {}
     secStudent = {}
     section = {}
-    print(subclass)
-
     for sid in range(start, stop + 1):
 
         for cs in range(len(obj[str(sid)])):
@@ -43,8 +41,6 @@ def countData(obj,start, stop):
             #print("-------------------------")
             #print(str(obj[str(sid)][cs][3]))
             #print(str(obj[str(sid)][cs][0])+"\t"+str(obj[str(sid)][cs][2])+"\t"+str(obj[str(sid)][cs][3]))
-
-    print(sub.count('261200'))
     print(subclass)
 
 
