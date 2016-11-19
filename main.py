@@ -15,7 +15,8 @@ def manu():
     print("[2] See my File data")
     print("[3] Get json Statistic")
     print("[4] Get only subject name")
-    print("[5] Exit program")
+    print("[5] View people in Class")
+    print("[6] Exit program")
     item = int(input(">> "))
     if item == 1:
         mi=580610614
@@ -44,18 +45,23 @@ def manu():
         menu_item3(0)
 
     elif item == 4:
-        r = menu_item3(1)
-        itemlist = {}
-        print("------------------")
-        for x in r:
-            itemlist[x] = r[x]['name']
-        keylist = itemlist.keys()
-        keylist = sorted(keylist)
-        for key in keylist:
-            print(key, itemlist[key])
-        print("------------------\n")
+        menu_item4()
 
     elif item == 5:
+        r = menu_item3(1)
+        menu_item4()
+        print("Enter subject ID")
+        sbid = input(">> ")
+        try:
+            print("\n"+str(sbid)+" "+str(r[sbid]['name']))
+            for n in r[sbid]['sec']:
+                for sid in r[sbid]['sec'][n]:
+                    print("\t"+str(sid))
+            print()
+        except Exception:
+            print("Not found this subject in list")
+
+    elif item == 6:
         exit(0)
 
     else:
@@ -104,6 +110,20 @@ def menu_item3(arg):
                 print("Error file name Wrong try agin")
 
         return r
+
+
+def menu_item4():
+    r = menu_item3(1)
+    itemlist = {}
+    print("------------------")
+    for x in r:
+        itemlist[x] = r[x]['name']
+    keylist = itemlist.keys()
+    keylist = sorted(keylist)
+    for key in keylist:
+        print(key, itemlist[key])
+    print("------------------\n")
+
 
 
 if __name__ == "__main__":
