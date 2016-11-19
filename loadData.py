@@ -11,7 +11,7 @@ def scanData(start, stop):
     for sid in range(start, stop + 1):
         print("Now Scan " + str(sid))
 
-        url = "https://www3.reg.cmu.ac.th/regist159/public/result.php?id=580610" + str(sid)
+        url = "https://www3.reg.cmu.ac.th/regist259/public/result.php?id=580610" + str(sid)
         res = requests.get(url)
         res.encoding = 'tis-620'
         raw = res.text
@@ -75,18 +75,18 @@ def countData(obj,start, stop):
     for sid in range(start, stop + 1):
         for cs in range(len(obj[str(sid)])):
             sub.append(obj[str(sid)][cs][0])
-            print(str(obj[str(sid)][cs][0])+"\t"+str(obj[str(sid)][cs][2])+"\t"+str(obj[str(sid)][cs][3]))
+            print(str(obj[str(sid)][cs][0])+"\t"+str(obj[str(sid)][cs][2])+"\t"+str(obj[str(sid)][cs][3])+"\t"+str(obj[str(sid)][cs][1]))
 
     print(sub.count('261200'))
 
 
 def main(s,e):
-    t0 = time.clock()
+    #t0 = time.clock()
     #j = json.dumps(scanData(s, e))
     #a = datetime.now().strftime('%Y%m%d%H%M%S')
     #writeFile(j,a)
     #calData(readFile(a), s, e)
-    countData(readFile("20160614003047"), s, e)
+    countData(readFile("20161119150631"), s, e)
 
 if __name__ == "__main__":
     main(614,695)
