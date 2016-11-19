@@ -1,19 +1,24 @@
 import json
-import pprint
-
 
 def readFile(fn):
-    with open(str(fn)+".txt", mode='r+') as rt:
+    with open("data/"+str(fn)+".txt", mode='r+') as rt:
         k = rt.readline()
         we = json.loads(k, encoding='utf-8')
         return we
 
+
+def getminmax_key(obj):
+    a = []
+    for key in obj.keys():
+       a.append(key)
+    return {'min': min(a), 'max': max(a)}
+
+
+
 def countData(obj,start, stop):
     sub=[]
     subclass = {}
-    secStudent = {}
-    section = {}
-    for sid in range(start, stop + 1):
+    for sid in range(start, stop):
 
         for cs in range(len(obj[str(sid)])):
             sub.append(obj[str(sid)][cs][0])
@@ -37,15 +42,10 @@ def countData(obj,start, stop):
                     subclass[str(obj[str(sid)][cs][0])]["sec"][str(obj[str(sid)][cs][2])].append(str(sid))
                 except Exception:
                     subclass[str(obj[str(sid)][cs][0])]["sec"][str(obj[str(sid)][cs][2])] = [str(sid)]
-
-            #print("-------------------------")
-            #print(str(obj[str(sid)][cs][3]))
-            #print(str(obj[str(sid)][cs][0])+"\t"+str(obj[str(sid)][cs][2])+"\t"+str(obj[str(sid)][cs][3]))
     print(subclass)
 
 
-def main(s,e):
-    countData(readFile("20161119150631"), s, e)
-
-if __name__ == "__main__":
-    main(614,695)
+def getData(fileID):
+    r = readFile(fileID)
+    g = getminmax_key(r)
+    countData(r,int(g['min']), int(g['max']))

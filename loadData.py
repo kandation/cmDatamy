@@ -11,7 +11,7 @@ def scanData(start, stop):
     for sid in range(start, stop + 1):
         print("Now Scan " + str(sid))
 
-        url = "https://www3.reg.cmu.ac.th/regist259/public/result.php?id=580610" + str(sid)
+        url = "https://www3.reg.cmu.ac.th/regist259/public/result.php?id=" + str(sid)
         res = requests.get(url)
         res.encoding = 'tis-620'
         raw = res.text
@@ -44,7 +44,7 @@ def scanData(start, stop):
                     listData = []
 
         else:
-            print("Now Scan " + str(sid) + " not regist!")
+            print("\tNow Scan " + str(sid) + " not regist!")
 
         finalData[sid] = stdList
         sleep(1)
@@ -60,12 +60,12 @@ def calData(obj,start, stop):
 
 
 def writeFile(js,fn):
-    with open(str(fn)+".txt", mode='a+', encoding='utf-8') as rt:
+    with open("data/"+str(fn)+".txt", mode='a+', encoding='utf-8') as rt:
         rt.write(js)
         rt.close()
 
 def readFile(fn):
-    with open(str(fn)+".txt", mode='r+') as rt:
+    with open("data/"+str(fn)+".txt", mode='r+') as rt:
         k = rt.readline()
         we = json.loads(k, encoding='utf-8')
         return we
@@ -80,16 +80,14 @@ def countData(obj,start, stop):
     print(sub.count('261200'))
 
 
-def main(s,e):
-    #t0 = time.clock()
-    #j = json.dumps(scanData(s, e))
-    #a = datetime.now().strftime('%Y%m%d%H%M%S')
-    #writeFile(j,a)
+def get_user(s,e):
+    t0 = time.clock()
+    j = json.dumps(scanData(s, e))
+    print("Now i create new file")
+    a = datetime.now().strftime('%Y%m%d%H%M%S')
+    writeFile(j,a)
     #calData(readFile(a), s, e)
-    countData(readFile("20161119150631"), s, e)
-
-if __name__ == "__main__":
-    main(614,695)
+    #countData(readFile("20161119150631"), s, e)
 
 
 
