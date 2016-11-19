@@ -1,5 +1,5 @@
 #Request
 - python 3.5
-- requests
-- beautifulsoup
+- [requests](http://docs.python-requests.org/en/master/)
+- [BeautifulSoup](https://pypi.python.org/pypi/beautifulsoup4)
 
