@@ -12,6 +12,7 @@ def main():
 
 def manu():
     print("[1] Get Data Form internet")
+    print('[7] Get Data From internet V2.0 (new)')
     print("[2] See my File data")
     print("[3] Get json Statistic")
     print("[4] Get only subject name")
@@ -37,6 +38,23 @@ def manu():
 
         print("Wait Me Now i get data Form internet")
         loadData.get_user(mi, ma)
+    elif item == 7:
+        sample_sid = 0
+        id = 1
+        while True:
+            sample_sid = int(input("Start Students ID in faculty: "))
+            if sample_sid == 0:
+                print("Welcome CPE now i get for U")
+                sample_sid = '580610614'
+                id = 6
+                break
+
+        print("Wait Me Now i get data Form internet")
+        year = '25'+str(sample_sid)[0:2]
+
+        loadData.get_user_v2(id, year)
+
+
     elif item == 2:
         for x in os.listdir("data"):
             print("\t"+str(x))
@@ -106,8 +124,8 @@ def menu_item3(arg):
                     if iex.lower() == "y" or iex.lower() == "yes":
                         exit(0)
                 break
-            except Exception:
-                print("Error file name Wrong try agin")
+            except Exception as e:
+                print("Error file name Wrong try agin",str(e) )
 
         return r
 
@@ -121,7 +139,7 @@ def menu_item4():
     keylist = itemlist.keys()
     keylist = sorted(keylist)
     for key in keylist:
-        print(key, itemlist[key])
+        print('({counter})'.format(counter=r[key]['count']),key, itemlist[key])
     print("------------------\n")
 
 

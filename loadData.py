@@ -11,7 +11,58 @@ def scanData(start, stop):
     for sid in range(start, stop + 1):
         print("Now Scan " + str(sid))
 
-        url = "https://www3.reg.cmu.ac.th/regist259/public/result.php?id=" + str(sid)
+        url = "https://www3.reg.cmu.ac.th/regist161/public/result.php?id=" + str(sid)
+        res = requests.get(url)
+        res.encoding = 'tis-620'
+        raw = res.text
+
+        soup = BeautifulSoup(raw, "html.parser")
+        data = soup.find_all('tr', {"class": "msan8"})
+
+        i = 0
+        n = 0
+        cs = []
+        lec = []
+        nam = []
+        lab = []
+
+        stdList = []
+        listData = []
+
+        if (len(data) > 0):
+            for num in range(2, len(data)):
+                raw_sidData = data[num].find_all('td')
+                if (len(raw_sidData) > 0):
+                    if (raw_sidData[0].text.isnumeric()):
+                        for num2 in range(1, len(raw_sidData)):
+                            #print (raw_sidData[num2].text)
+                            ty = raw_sidData[num2].text.strip()
+                            listData.append(ty)
+                        list2 = [x for x in listData if x != []]
+
+                    stdList.append(list2)
+                    listData = []
+
+        else:
+            print("\tNow Scan " + str(sid) + " not regist!")
+
+        finalData[sid] = stdList
+        sleep(1)
+        # print(json.dumps(finalData, indent=4))
+    return finalData
+
+def scanData_v2(id, year):
+    finalData = {}
+    fo = open('./version/2.0/data/student_data'+str(year)+'.txt', mode='r', encoding='utf8')
+    import json
+    jsData = json.loads(str(fo.read()))
+    fo.close()
+
+    for dsid in jsData[id]['students']:
+        sid = dsid['sid']
+        print("Now Scan " + str(sid))
+
+        url = "https://www3.reg.cmu.ac.th/regist161/public/result.php?id=" + str(sid)
         res = requests.get(url)
         res.encoding = 'tis-620'
         raw = res.text
@@ -60,6 +111,11 @@ def calData(obj,start, stop):
 
 
 def writeFile(js,fn):
+    import os
+    if not os.path.isdir('data'):
+        os.makedirs('data')
+
+    print('created file '+"data/"+str(fn)+".txt")
     with open("data/"+str(fn)+".txt", mode='a+', encoding='utf-8') as rt:
         rt.write(js)
         rt.close()
@@ -83,6 +139,15 @@ def countData(obj,start, stop):
 def get_user(s,e):
     t0 = time.clock()
     j = json.dumps(scanData(s, e))
+    print("Now i create new file")
+    a = datetime.now().strftime('%Y%m%d%H%M%S')
+    writeFile(j,a)
+    #calData(readFile(a), s, e)
+    #countData(readFile("20161119150631"), s, e)
+
+def get_user_v2(id, year):
+    t0 = time.clock()
+    j = json.dumps(scanData_v2(id, year))
     print("Now i create new file")
     a = datetime.now().strftime('%Y%m%d%H%M%S')
     writeFile(j,a)
